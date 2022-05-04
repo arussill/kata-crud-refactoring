@@ -1,7 +1,7 @@
 import React, { useReducer, createContext } from 'react';
-import { Form } from './Form';
-import { List } from './List';
-import { reducer } from './reducer';
+import { Form } from './Components/Form';
+import { List } from './Components/List';
+import { reducer } from './Components/reducer';
 
 export const HOST_API = "http://localhost:8080/api";
 const initialState = {
