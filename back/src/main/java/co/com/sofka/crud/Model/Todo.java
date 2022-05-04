@@ -3,7 +3,7 @@ package co.com.sofka.crud.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lista")
+@Table(name = "Todo")
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
