@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import { Store, HOST_API } from '../App';
+import { HOST_API } from '../App';
+import { Form } from './Form';
+import { Store } from "./Store";
 
 export const List = () => {
   const { dispatch, state: { todo } } = useContext(Store);
@@ -49,6 +51,7 @@ export const List = () => {
     textDecoration: 'line-through'
   };
   return <div>
+    <Form />
     <table>
       <thead>
         <tr>
