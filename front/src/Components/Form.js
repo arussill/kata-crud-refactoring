@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { HOST_API } from '../App';
 import { Store } from "./Store";
 
-export const Form = ({groupId}) => {
+export const Form = (props) => {
   const formRef = useRef(null);
   const { dispatch, state: { todo } } = useContext(Store);
   const item = todo.item;
@@ -15,9 +15,10 @@ export const Form = ({groupId}) => {
       name: state.name,
       id: null,
       completed: false,
-      groupListId: groupId
+      groupListId: props.groupListId,
     };  
 
+    console.log(request);
 
     fetch(HOST_API + "/todo", {
       method: "POST",
@@ -41,7 +42,7 @@ export const Form = ({groupId}) => {
       name: state.name,
       id: item.id,
       isCompleted: item.isCompleted,
-      groupListId: groupId
+      groupListId: props.groupListId
     };
 
 
@@ -69,7 +70,7 @@ export const Form = ({groupId}) => {
       onChange={(event) => {
         setState({ ...state, name: event.target.value });
       }}></input>
-    {item.id && <button onClick={onEdit}>Actualizar</button>}
+    {item.id && item.groupListId === props.groupListId && <button onClick={onEdit}>Actualizar</button>}
     {!item.id && <button onClick={onAdd}>Crear</button>}
   </form>;
 };

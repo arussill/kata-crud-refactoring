@@ -8,7 +8,7 @@ public class TodoDTO implements Serializable {
     private Long id;
     private String name;
     private boolean completed;
-    private Long grupListId;
+    private Long groupListId;
 
     public Long getId() {
         return id;
@@ -35,10 +35,10 @@ public class TodoDTO implements Serializable {
     }
 
     public Long getGrupListId() {
-        return grupListId;
+        return groupListId;
     }
 
-    public void setGrupListId(Long grupListId) {
-        this.grupListId = grupListId;
+    public void setGrupListId(Long groupListId) {
+        this.groupListId = groupListId;
     }
 }

@@ -30,6 +30,9 @@ export function reducer(state, action) {
       const todoUp = state.todo.list;
       todoUp.push(action.item);
       return { ...state, todo: { list: todoUp, item: {} } };
+
+
+      // Para el grupo de listas
     case "add-todolist":
       const todolistUp = state.todoList.list;
       todolistUp.push(action.item);
@@ -41,7 +44,7 @@ export function reducer(state, action) {
     case "delete-todolist":
       const todoListDelete = state.todoList;
       const todoListUpdate = todoListDelete.list.filter((item) => {
-        return item.id !== action.id;
+        return item.idTodoList !== action.id;
       });
       todoListDelete.list = todoListUpdate;
       return { ...state, todo: todoListDelete };

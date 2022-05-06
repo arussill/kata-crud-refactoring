@@ -17,7 +17,7 @@ public class TodoList {
 
     //    Relacion con tabla Todo
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "grupListId")
+    @JoinColumn(name = "groupListId")
     private Set<Todo> id_TodoList;
 
     // GETTERS AND SETTERS

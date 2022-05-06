@@ -23,11 +23,11 @@ public class Todo {
 
 //    CONSTRUCTOR
 
-    public Todo(Long id, String name, boolean completed, Long grupListId) {
+    public Todo(Long id, String name, boolean completed, Long groupListId) {
         this.id = id;
         this.name = name;
         this.completed = completed;
-        this.grupListId = grupListId;
+        this.groupListId = groupListId;
     }
 
     public Todo() {
@@ -35,11 +35,11 @@ public class Todo {
     }
 
     public Long getGrupListId() {
-        return grupListId;
+        return groupListId;
     }
 
-    public void setGrupListId(Long grupListId) {
-        this.grupListId = grupListId;
+    public void setGrupListId(Long groupListId) {
+        this.groupListId = groupListId;
     }
 
     public Long getId() {

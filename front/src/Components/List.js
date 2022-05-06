@@ -49,12 +49,6 @@ export const List = () => {
    * Este onDelete permite la eliminación de un grupo o lista grande
    */
   const onDeleteTodoList = (id) => {
-    const deleteAllListItem = todo.list.map((item) => {
-      if (item.groupListId === id) {
-        onDelete(item.id);
-      }
-    });
-
     fetch(HOST_API + "/" + id + "/todolist", {
       method: "DELETE",
     }).then((list) => {
@@ -94,6 +88,7 @@ export const List = () => {
     textDecoration: "line-through",
   };
 
+
   return (
     <div>
       {currentTodoList.map((group) => (
@@ -111,7 +106,7 @@ export const List = () => {
             </thead>
             <tbody>
               {currentList.map((todo) => {
-                if (todo.groupListId === group.idTodoList) {
+               
                   return (
                     <tr
                       key={todo.id}
@@ -136,7 +131,7 @@ export const List = () => {
                       </td>
                     </tr>
                   );
-                }
+                
               })}
             </tbody>
           </table>
