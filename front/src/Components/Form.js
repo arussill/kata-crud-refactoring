@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { HOST_API } from '../App';
 import { Store } from "./Store";
 
-export const Form = () => {
+export const Form = ({groupId}) => {
   const formRef = useRef(null);
   const { dispatch, state: { todo } } = useContext(Store);
   const item = todo.item;
@@ -14,8 +14,9 @@ export const Form = () => {
     const request = {
       name: state.name,
       id: null,
-      completed: false
-    };
+      completed: false,
+      groupListId: groupId
+    };  
 
 
     fetch(HOST_API + "/todo", {
@@ -39,7 +40,8 @@ export const Form = () => {
     const request = {
       name: state.name,
       id: item.id,
-      isCompleted: item.isCompleted
+      isCompleted: item.isCompleted,
+      groupListId: groupId
     };
 
 

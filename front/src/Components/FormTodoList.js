@@ -12,9 +12,8 @@ export const FormTodoList = () => {
     event.preventDefault();
     
     const request = {
-      name: state.name,
-      id: null,
-      completed: false
+      nameTodoList: state.name,
+      idTodoList: null,
     };
 
 

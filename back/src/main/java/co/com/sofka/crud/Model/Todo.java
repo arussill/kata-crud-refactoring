@@ -17,8 +17,9 @@ public class Todo {
     @Column(name = "completed")
     private boolean completed;
 
-    @Column(name = "grupListId")
-    private Long grupListId;
+    @Column(name = "groupListId")
+    private Long groupListId;
+
 
 //    CONSTRUCTOR
 
