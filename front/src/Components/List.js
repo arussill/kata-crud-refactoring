@@ -28,14 +28,6 @@ export const List = () => {
     });
   };
 
-  const onDeleteTask = (id) => {
-    fetch(HOST_API + "/todo/" + id, {
-      method: "DELETE",
-    }).then((list) => {
-      dispatch({ type: "delete-task", id });
-    });
-  };
-
   const onEdit = (todo) => {
     dispatch({ type: "edit-item", item: todo });
   };
@@ -70,13 +62,13 @@ export const List = () => {
   }, [dispatch]);
 
   const onDeleteList = (id) => {
-    const deleteAllListItem = todoList.list.map((item) => {
+    todo.list.map((item) => {
       if (item.id_tareas === id) {
-        onDelete(item.id);
+        onDelete(item.id_tareas);
       }
     });
-
-    fetch(HOST_API + "/todoList/" + id, {
+   
+    fetch(HOST_API + "/todolist/" + id, {
       method: "DELETE",
     }).then((list) => {
       dispatch({ type: "delete-list", id });
@@ -102,7 +94,7 @@ export const List = () => {
                       className="eliminar"
                         onClick={() => onDeleteList(list.id)}
                       >
-                        Eliminar
+                        x
                       </button>
                     </td>
                   </tr>
@@ -138,7 +130,7 @@ export const List = () => {
                           <td>
                             <button
                               className="eliminar"
-                              onClick={() => onDeleteTask(todo.id)}
+                              onClick={() => onDelete(todo.id)}
                             >
                               Eliminar
                             </button>
