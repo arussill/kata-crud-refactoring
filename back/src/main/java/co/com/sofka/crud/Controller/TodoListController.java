@@ -13,30 +13,35 @@ public class TodoListController {
    @Autowired
    private TodoListService service;
 
-    @GetMapping(value = "api/todoslist")
+    @CrossOrigin
+    @GetMapping(value = "api/todolist")
     public Iterable<TodoListDTO> list(){
         return service.list();
     }
 
+    @CrossOrigin
     @PostMapping(value = "api/todolist")
     public TodoListDTO save(@RequestBody TodoListDTO todoDto){
         return service.save(todoDto);
     }
 
+    @CrossOrigin
     @PutMapping(value = "api/todolist")
     public TodoListDTO update(@RequestBody TodoListDTO todoDto){
-        if(todoDto.getIdTodoList() != null){
+        if(todoDto.getId() != null){
             return service.save(todoDto);
         }
         throw new RuntimeException("No existe el id para actualziar");
     }
 
-    @DeleteMapping(value = "api/{id}/todolist")
+    @CrossOrigin
+    @DeleteMapping(value = "api/todolist/{id}")
     public void delete(@PathVariable("id")Long id){
         service.delete(id);
     }
 
-    @GetMapping(value = "api/{id}/todolist")
+    @CrossOrigin
+    @GetMapping(value = "api/todolist/{id}")
     public TodoList get(@PathVariable("id") Long id){
         return service.get(id);
     }

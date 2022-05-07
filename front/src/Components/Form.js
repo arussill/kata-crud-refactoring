@@ -1,33 +1,38 @@
-import React, { useContext, useRef, useState } from 'react';
-import { HOST_API } from '../App';
-import { Store } from "./Store";
+import  React ,{ useContext, useRef, useState } from "react";
+import {Store} from './Store'
+import { HOST_API } from "../App";
 
-export const Form = (props) => {
+export const Form = ({ groupId }) => {
   const formRef = useRef(null);
-  const { dispatch, state: { todo } } = useContext(Store);
+  const {
+    dispatch,
+    state: { todo },
+  } = useContext(Store);
   const item = todo.item;
   const [state, setState] = useState(item);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [hasWritten, setHasWritten] = useState(false);
 
   const onAdd = (event) => {
     event.preventDefault();
+    setIsDisabled(true);
+    setHasWritten(false);
 
     const request = {
       name: state.name,
       id: null,
       completed: false,
-      groupListId: props.groupListId,
-    };  
-
-    console.log(request);
+      id_group: groupId,
+    };
 
     fetch(HOST_API + "/todo", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((todo) => {
         dispatch({ type: "add-item", item: todo });
         setState({ name: "" });
@@ -41,19 +46,18 @@ export const Form = (props) => {
     const request = {
       name: state.name,
       id: item.id,
-      isCompleted: item.isCompleted,
-      groupListId: props.groupListId
+      completed: item.completed,
+      id_group: groupId,
     };
-
 
     fetch(HOST_API + "/todo", {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((todo) => {
         dispatch({ type: "update-item", item: todo });
         setState({ name: "" });
@@ -61,16 +65,39 @@ export const Form = (props) => {
       });
   };
 
-  return <form ref={formRef}>
-    <input
-      type="text"
-      name="name"
-      placeholder="¿Qué piensas hacer hoy?"
-      defaultValue={item.name}
-      onChange={(event) => {
-        setState({ ...state, name: event.target.value });
-      }}></input>
-    {item.id && item.groupListId === props.groupListId && <button onClick={onEdit}>Actualizar</button>}
-    {!item.id && <button onClick={onAdd}>Crear</button>}
-  </form>;
+  return (
+    <div>
+      <form ref={formRef}>
+        <input
+          type="text"
+          name="name"
+          placeholder="¿Qué deseas hacer?"
+          defaultValue={item.id_group === groupId ? item.name : ""}
+          onChange={(event) => {
+            setHasWritten(true);
+            setIsDisabled(event.target.value.length > null ? false : true);
+            setState({ ...state, name: event.target.value });
+          }}
+        />
+        {item.id && item.id_group === groupId && (
+          <button className="editar" onClick={onEdit}>
+            Actualizar
+          </button>
+        )}
+        {!item.id && (
+          <button
+            dissbled={isDisabled}
+            className="crear"
+            onClick={onAdd}
+          >
+            Crear
+          </button>
+        )}
+      </form>
+      {isDisabled && hasWritten && (
+        <span className="campo-obligatorio">Campo requerido</span>
+      )}
+    </div>
+  );
 };
+

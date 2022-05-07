@@ -13,16 +13,19 @@ public class TodoController {
     @Autowired
     private TodoService service;
 
-    @GetMapping(value = "api/todos")
+    @CrossOrigin
+    @GetMapping(value = "api/todo")
     public Iterable<TodoDTO> list(){
         return service.list();
     }
-    
+
+    @CrossOrigin
     @PostMapping(value = "api/todo")
     public TodoDTO save(@RequestBody TodoDTO todoDto){
         return service.save(todoDto);
     }
 
+    @CrossOrigin
     @PutMapping(value = "api/todo")
     public TodoDTO update(@RequestBody TodoDTO todoDto){
         if(todoDto.getId() != null){
@@ -31,12 +34,14 @@ public class TodoController {
         throw new RuntimeException("No existe el id para actualziar");
     }
 
-    @DeleteMapping(value = "api/{id}/todo")
+    @CrossOrigin
+    @DeleteMapping(value = "api/todo/{id}")
     public void delete(@PathVariable("id")Long id){
         service.delete(id);
     }
 
-    @GetMapping(value = "api/{id}/todo")
+    @CrossOrigin
+    @GetMapping(value = "api/todo/{id}")
     public Todo get(@PathVariable("id") Long id){
         return service.get(id);
     }

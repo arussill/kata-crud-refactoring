@@ -1,24 +1,51 @@
 package co.com.sofka.crud.DTO;
 
+import co.com.sofka.crud.Model.Todo;
+
 import java.io.Serializable;
+import java.util.Set;
 
 public class TodoListDTO implements Serializable {
-    private Long idTodoList;
-    private String nameTodoList;
+//    ATRIBUTOS
+    private Long id;
+    private String name;
+    private Set<Todo> groupId;
 
-    public Long getIdTodoList() {
-        return idTodoList;
+//    CONSTRUCTORES
+
+    public TodoListDTO() {
     }
 
-    public void setIdTodoList(Long idTodoList) {
-        this.idTodoList = idTodoList;
+    public TodoListDTO(Long id, String name, Set<Todo> groupId) {
+        this.id = id;
+        this.name = name;
+        this.groupId = groupId;
     }
 
-    public String getNameTodoList() {
-        return nameTodoList;
+//    GETTERS Y SETTERS
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setNameTodoList(String nameTodoList) {
-        this.nameTodoList = nameTodoList;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Todo> getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Set<Todo> groupId) {
+        this.groupId = groupId;
     }
 }

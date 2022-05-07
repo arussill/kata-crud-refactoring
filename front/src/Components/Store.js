@@ -1,7 +1,12 @@
-import { createContext } from 'react';
+import  {createContext} from 'react'
+
 
 export const initialState = {
-  todo: { list: [], item: {} },
-  todoList: { list: [], item: {} }
-};
+    todo: { list: [], item: {} },
+    /**
+     * nuevo lists
+     */
+    todoList: { list: [], item: {}}
+    
+  };
 export const Store = createContext(initialState);

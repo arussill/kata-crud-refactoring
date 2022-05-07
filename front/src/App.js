@@ -1,21 +1,20 @@
 import React from "react";
-import { Fragment } from "react/cjs/react.development";
-import { FormTodoList } from "./Components/FormTodoList";
-import { List } from "./Components/List";
+import {List} from "./Components/List.js";
 import { StoreProvider } from "./Components/StoreProvider";
+import {FormTodoList} from "./Components/FormTodoList";
 
 export const HOST_API = "http://localhost:8080/api";
-
 function App() {
   return (
-    <Fragment>
+    <StoreProvider>
       <h1>To-Do List</h1>
-      <StoreProvider>
-        <h2>Grupo de Listas</h2>
+      <div >
         <FormTodoList />
+      </div>
+      <div>
         <List />
-      </StoreProvider>
-    </Fragment>
+      </div>
+    </StoreProvider>
   );
 }
 

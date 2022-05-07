@@ -1,76 +1,53 @@
-import React, { useContext, useEffect } from "react";
-import { Fragment } from "react/cjs/react.development";
+import React, { useContext, useEffect, Fragment  } from "react";
 import { HOST_API } from "../App";
 import { Form } from "./Form";
 import { Store } from "./Store";
 
 export const List = () => {
+  
   const {
     dispatch,
     state: { todo, todoList },
   } = useContext(Store);
-  const currentList = todo.list;
-  const currentTodoList = todoList.list;
+  const currentTodos = todo.list;
+  const currentList = todoList.list;
 
-  /**
-   * Este useEffect permite obtener la lista de tareas o todos
-   */
   useEffect(() => {
-    fetch(HOST_API + "/todos")
+    fetch(HOST_API + "/todo")
       .then((response) => response.json())
       .then((list) => {
         dispatch({ type: "update-list", list });
       });
   }, [dispatch]);
 
-  /**
-   * Este useEffect permite obtener el grupo de listas (las grandes)
-   */
-  useEffect(() => {
-    fetch(HOST_API + "/todoslist")
-      .then((response) => response.json())
-      .then((list) => {
-        dispatch({ type: "update-todolist", list });
-      });
-  }, [dispatch]);
-
-  /**
-   * Este onDelete permite la eliminación de un item de las tareas o todos
-   */
   const onDelete = (id) => {
-    fetch(HOST_API + "/" + id + "/todo", {
+    fetch(HOST_API + "/todo/" + id, {
       method: "DELETE",
     }).then((list) => {
       dispatch({ type: "delete-item", id });
     });
   };
 
-  /**
-   * Este onDelete permite la eliminación de un grupo o lista grande
-   */
-  const onDeleteTodoList = (id) => {
-    fetch(HOST_API + "/" + id + "/todolist", {
+  const onDeleteTask = (id) => {
+    fetch(HOST_API + "/todo/" + id, {
       method: "DELETE",
     }).then((list) => {
-      dispatch({ type: "delete-todolist", id });
+      dispatch({ type: "delete-task", id });
     });
   };
 
-  /*edita items de la lista*/
   const onEdit = (todo) => {
     dispatch({ type: "edit-item", item: todo });
   };
 
-  /**
-   * actualiza los item de la lista después de editados
-   */
-  const onChange = (event, todo, groupid) => {
+  const onChange = (event, todo, groupId) => {
     const request = {
       name: todo.name,
       id: todo.id,
       completed: event.target.checked,
-      grupListId: groupid,
+      id_group: groupId,
     };
+    
     fetch(HOST_API + "/todo", {
       method: "PUT",
       body: JSON.stringify(request),
@@ -84,59 +61,109 @@ export const List = () => {
       });
   };
 
+  useEffect(() => {
+    fetch(HOST_API + "/todolist")
+      .then((response) => response.json())
+      .then((list) => {
+        dispatch({ type: "update-listOfList", list });
+      });
+  }, [dispatch]);
+
+  const onDeleteList = (id) => {
+    const deleteAllListItem = todoList.list.map((item) => {
+      if (item.id_tareas === id) {
+        onDelete(item.id);
+      }
+    });
+
+    fetch(HOST_API + "/todoList/" + id, {
+      method: "DELETE",
+    }).then((list) => {
+      dispatch({ type: "delete-list", id });
+    });
+  };
+
   const decorationDone = {
     textDecoration: "line-through",
   };
 
-
   return (
-    <div>
-      {currentTodoList.map((group) => (
-        <div key={group.idTodoList}>
-          <h3>{group.nameTodoList}</h3>
-          <button onClick={() => onDeleteTodoList(group.idTodoList)}>x</button>
-          <Form groupListId={group.idTodoList} />
-          <table>
-            <thead>
-              <tr>
-                <td>ID</td>
-                <td>Tarea</td>
-                <td>¿Completado?</td>
-              </tr>
-            </thead>
-            <tbody>
-              {currentList.map((todo) => {
-               
-                  return (
-                    <tr
-                      key={todo.id}
-                      style={todo.completed ? decorationDone : {}}
-                    >
-                      <td>{todo.id}</td>
-                      <td>{todo.name}</td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          defaultChecked={todo.completed}
-                          onChange={(event) => onChange(event, todo, group.idTodoList)}
-                        ></input>
-                      </td>
-                      <td>
-                        <button onClick={() => onDelete(todo.id)}>
-                          Eliminar
-                        </button>
-                      </td>
-                      <td>
-                        <button onClick={() => onEdit(todo)}>Editar</button>
-                      </td>
-                    </tr>
-                  );
-                
-              })}
-            </tbody>
-          </table>
-        </div>
-      ))}
-    </div>
+    <Fragment>
+      <table cellSpacing="0">
+        <tbody>
+          {currentList.map((list) => {
+            return (
+              <Fragment key={list.id}>
+                <div className="listDiv">
+                  <tr>
+                    <td id="TitleText">{list.name}</td>
+                    <td>
+                      <button
+                      className="eliminar"
+                        onClick={() => onDeleteList(list.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Form groupId={list.id} />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td className="td">Id</td>
+                    <td className="td">Tarea</td>
+                    <td className="td">¿Completa?</td>
+                  </tr>
+                  {currentTodos.map((todo) => {
+                    if (todo.id_group=== list.id) {
+                      return (
+                        <tr
+                          key={todo.id}
+                          style={todo.completed ? decorationDone : {}}
+                        >
+                          <td>{todo.id}</td>
+                          <td>{todo.name}</td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              defaultChecked={todo.completed}
+                              onChange={(event) =>
+                                onChange(event, todo, list.id)
+                              }
+                            ></input>
+                          </td>
+                          <td>
+                            <button
+                              className="eliminar"
+                              onClick={() => onDeleteTask(todo.id)}
+                            >
+                              Eliminar
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => onEdit(todo)}
+                              className="editar"
+                            >
+                              Editar
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    }
+                    return;
+                  })}
+                </div>
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+    </Fragment>
   );
 };
+
+

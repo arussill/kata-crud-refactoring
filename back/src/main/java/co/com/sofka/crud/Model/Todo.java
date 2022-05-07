@@ -2,9 +2,8 @@ package co.com.sofka.crud.Model;
 
 import javax.persistence.*;
 
-//items
 @Entity
-@Table(name = "Todo")
+@Table(name = "tareitas")
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,30 +16,23 @@ public class Todo {
     @Column(name = "completed")
     private boolean completed;
 
-    @Column(name = "groupListId")
-    private Long groupListId;
+    @Column(name = "id_group")
+    private Long id_group;
 
 
-//    CONSTRUCTOR
+//    CONSTRUCTORES
 
-    public Todo(Long id, String name, boolean completed, Long groupListId) {
+    public Todo() {
+    }
+
+    public Todo(Long id, String name, boolean completed, Long id_group) {
         this.id = id;
         this.name = name;
         this.completed = completed;
-        this.groupListId = groupListId;
+        this.id_group = id_group;
     }
 
-    public Todo() {
-
-    }
-
-    public Long getGrupListId() {
-        return groupListId;
-    }
-
-    public void setGrupListId(Long groupListId) {
-        this.groupListId = groupListId;
-    }
+//    SETTERS y GETTERS
 
     public Long getId() {
         return id;
@@ -64,5 +56,13 @@ public class Todo {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Long getId_group() {
+        return id_group;
+    }
+
+    public void setId_group(Long id_group) {
+        this.id_group = id_group;
     }
 }

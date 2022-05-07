@@ -3,45 +3,56 @@ package co.com.sofka.crud.Model;
 import javax.persistence.*;
 import java.util.Set;
 
-//Padre
+
 @Entity
-@Table(name = "TodoList")
+@Table(name = "grupos")
 public class TodoList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long idTodoList;
+    private Long id;
 
-    @Column(name = "nameTodoList")
-    private String nameTodoList;
+    @Column(name = "name")
+    private String name;
 
     //    Relacion con tabla Todo
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "groupListId")
-    private Set<Todo> id_TodoList;
+    @JoinColumn(name = "id_group")
+    private Set<Todo> groupId;
 
-    // GETTERS AND SETTERS
+    // GETTERS Y SETTERS
+
     public Long getId() {
-        return idTodoList;
+        return id;
     }
 
-    public void setId(Long idTodoList) {
-        this.idTodoList = idTodoList;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
-        return nameTodoList;
+        return name;
     }
 
-    public void setName(String nameTodoList) {
-        this.nameTodoList = nameTodoList;
+    public void setName(String name) {
+        this.name = name;
     }
 
-//    CONSTRUCTOR
+    public Set<Todo> getGroupId() {
+        return groupId;
+    }
 
-    public TodoList(Long idTodoList, String nameTodoList) {
-        this.idTodoList = idTodoList;
-        this.nameTodoList = nameTodoList;
+    public void setGroupId(Set<Todo> groupId) {
+        this.groupId = groupId;
+    }
+
+
+//    CONSTRUCTORES
+
+    public TodoList(Long id, String name, Set<Todo> groupId) {
+        this.id = id;
+        this.name = name;
+        this.groupId = groupId;
     }
 
     public TodoList() {

@@ -4,12 +4,24 @@ package co.com.sofka.crud.DTO;
 import java.io.Serializable;
 
 public class TodoDTO implements Serializable {
-
+//    ATRIBUTOS
     private Long id;
     private String name;
     private boolean completed;
-    private Long groupListId;
+    private Long id_group;
 
+//    CONSTRUCTORES
+    public TodoDTO() {
+    }
+
+    public TodoDTO(Long id, String name, boolean completed, Long id_group) {
+        this.id = id;
+        this.name = name;
+        this.completed = completed;
+        this.id_group = id_group;
+    }
+
+//    GETTERS Y SETTERS
     public Long getId() {
         return id;
     }
@@ -34,11 +46,11 @@ public class TodoDTO implements Serializable {
         this.completed = completed;
     }
 
-    public Long getGrupListId() {
-        return groupListId;
+    public Long getId_group() {
+        return id_group;
     }
 
-    public void setGrupListId(Long groupListId) {
-        this.groupListId = groupListId;
+    public void setId_group(Long id_group) {
+        this.id_group = id_group;
     }
 }
