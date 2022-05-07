@@ -12,7 +12,7 @@ export function Reducer(state, action) {
       todoUpItem.item = {};
       return { ...state, todo: todoUpItem };
 
-    case "delete-task":
+    case "delete-item":
       const todoUpDelete = state.todo;
       const listUpdate = todoUpDelete.list.filter((item) => {
         return item.id !== action.id;

@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useRef, useState } from "react";
 import { HOST_API } from "../App";
 import {Store} from './Store'
 
-
 export const FormTodoList = () => {
   const formRef = useRef(null);
   const {
@@ -12,13 +11,14 @@ export const FormTodoList = () => {
   
   const item = todoList.item;
   const [state, setState] = useState(item);
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [hasWritten, sethasWritten] = useState(false);
+  const [habilitado, setHabilitado] = useState(true);
+  const [escribir, setEscribir] = useState(false);
 
   const onAdd = (event) => {
     event.preventDefault();
-    setIsDisabled(true);
-    sethasWritten(false);
+    setHabilitado(true);
+    setEscribir(false);
+
     const request = {
       id: null,
       name: state.name,      
@@ -42,31 +42,28 @@ export const FormTodoList = () => {
   return (
     <Fragment>
       <form ref={formRef}>
-        <h3 id="Listas">Grupo de Listas</h3>
+        <h3>Grupo de Listas</h3>
         <input
-          className="form-control me-2"
           type="text"
           name="name"
           placeholder="Nombre de la lista"
           defaultValue={item.name}
-          id="listForms"
           onChange={(event) => {
-            sethasWritten(true);
-            setIsDisabled(event.target.value.length > null ? false : true);
+            setEscribir(true);
+            setHabilitado(event.target.value.trim().length > 0? false: true);
             setState({ ...state, name: event.target.value });
           }}
         ></input>
         {!item.id && (
           <button
-            disabled={isDisabled}
+            disabled={habilitado}
             onClick={onAdd}
           >
-            Crear
+            Nueva Lista
           </button>
         )}
-
-        {isDisabled && hasWritten && (
-          <p >Campo requerido</p>          
+        {habilitado && escribir && (
+          <p>Campo requerido</p>          
         )}
       </form>
     </Fragment>
