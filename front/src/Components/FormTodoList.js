@@ -38,7 +38,7 @@ export const FormTodoList = () => {
     })
       .then((response) => response.json())
       .then((list) => {
-        dispatch({ type: "add-list", item: list });
+        dispatch({ type: "add-grupo", item: list });
         setState({ name: "" });
         formRef.current.reset();
       });

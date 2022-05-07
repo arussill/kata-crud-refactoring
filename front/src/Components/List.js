@@ -20,7 +20,7 @@ export const List = () => {
     fetch(HOST_API + "/todo")
       .then((response) => response.json())
       .then((list) => {
-        dispatch({ type: "update-list", list });
+        dispatch({ type: "update-lista", list });
       });
   }, [dispatch]);
 
@@ -82,7 +82,7 @@ export const List = () => {
     fetch(HOST_API + "/todolist/" + id, {
       method: "DELETE",
     }).then((list) => {
-      dispatch({ type: "delete-list", id });
+      dispatch({ type: "delete-grupo", id });
     });
   };
 

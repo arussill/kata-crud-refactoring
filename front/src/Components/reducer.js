@@ -1,4 +1,7 @@
+/**Casos posibles que permite la aplicación CRUD */
+
 export function Reducer(state, action) {
+  /**Casos posibles de cambio de estado para las tareitas */
   switch (action.type) {
     case "update-item":
       const todoUpItem = state.todo;
@@ -35,12 +38,14 @@ export function Reducer(state, action) {
       todoUpList.list = action.list;
       return { ...state, todo: todoUpList };
 
-    case "delete-list":
+      /**Caso para el grupo de listas */
+
+    case "delete-grupo":
       const listUpDelete = state.todoList;
-      const listOfListUpdate = listUpDelete.list.filter((item) => {
+      const grupo = listUpDelete.list.filter((item) => {
         return item.id !== action.id;
       });
-      listUpDelete.list = listOfListUpdate;
+      listUpDelete.list = grupo;
       return { ...state, todoList: listUpDelete };
       
     case "update-grupo":
@@ -48,7 +53,7 @@ export function Reducer(state, action) {
       listUpList.list = action.list;
       return { ...state, todoList: listUpList };
 
-    case "add-list":
+    case "add-grupo":
       const listUp = state.todoList.list;
       listUp.push(action.item);
       return { ...state, todoList: { list: listUp, item: {} } };
