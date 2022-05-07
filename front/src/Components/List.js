@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, Fragment} from "react";
+import React, { useContext, useEffect, useState, Fragment } from "react";
 import { HOST_API } from "../App";
 import { Form } from "./Form";
 import { Store } from "./Store";
@@ -20,7 +20,7 @@ export const List = () => {
     fetch(HOST_API + "/todo")
       .then((response) => response.json())
       .then((list) => {
-        dispatch({ type: "update-lista", list });
+        dispatch({ type: "update-list", list });
       });
   }, [dispatch]);
 
@@ -93,15 +93,17 @@ export const List = () => {
 
   return (
     <Fragment>
-      <table>
+      <table className="table table-light table-striped">
         <tbody>
           {currentList.map((list) => {
             return (
               <Fragment key={list.id}>
+                <thead>
                   <tr>
-                    <td>{list.name}</td>
+                  <th scope="col">{list.name}</th>
                     <td>
                       <button
+                        className="btn btn-danger btn-sm ms-5"
                         onClick={() => onDeleteList(list.id)}
                       >
                         x
@@ -113,48 +115,50 @@ export const List = () => {
                       <Form groupId={list.id} />
                     </td>
                   </tr>
-
-                  <tr>
-                    <td>Id</td>
-                    <td>Tarea</td>
-                    <td>¿Completa?</td>
-                  </tr>
-                  {currentTodos.map((todo) => {
-                    if (todo.id_group === list.id) {
-                      return (
-                        <tr
-                          key={todo.id}
-                          style={todo.completed ? decorationDone : {}}
-                        >
-                          <td>{todo.id}</td>
-                          <td>{todo.name}</td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              defaultChecked={todo.completed}
-                              onChange={(event) => {
-                                onChange(event, todo, list.id);
-                              }}
-                            ></input>
-                          </td>
-                          <td>
-                            <button onClick={() => onDelete(todo.id)}>
-                              Eliminar
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              // disabled={habilitado}
-                              onClick={() => onEdit(todo)}
-                            >
-                              Editar
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  })}
-              </Fragment>
+                </thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Tarea</th>
+                  <th scope="col">¿Completa?</th>
+                  <th scope="col">Eliminar</th>
+                  <th scope="col">Editar</th>
+                </tr>
+                {currentTodos.map((todo) => {
+                  if (todo.id_group === list.id) {
+                    return (
+                      <tr
+                        key={todo.id}
+                        style={todo.completed ? decorationDone : {}}
+                      >
+                         <th scope="col">{todo.id}</th>
+                        <td>{todo.name}</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            defaultChecked={todo.completed}
+                            onChange={(event) => {
+                              onChange(event, todo, list.id);
+                            }}
+                          ></input>
+                        </td>
+                        <td>
+                          <button className="btn btn-danger" onClick={() => onDelete(todo.id)}>
+                            Eliminar
+                          </button>
+                        </td>
+                        <td>
+                          <button className="btn btn-warning"
+                            // disabled={habilitado}
+                            onClick={() => onEdit(todo)}
+                          >
+                            Editar
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                })}
+              </Fragment>  
             );
           })}
         </tbody>

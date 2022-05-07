@@ -47,10 +47,11 @@ export const FormTodoList = () => {
   return (
     <Fragment>
       <form ref={formRef}>
-        <h3>Grupo de Listas</h3>
+      <div className="input-group mb-3">
         <input
           type="text"
           name="name"
+          className="form-control"
           placeholder="Nombre de la lista"
           defaultValue={item.name}
           onChange={(event) => {
@@ -61,7 +62,7 @@ export const FormTodoList = () => {
           }}
         ></input>
         {!item.id && (
-          <button
+          <button className="btn btn-primary"
             disabled={habilitado}
             onClick={onAdd}
           >
@@ -72,7 +73,9 @@ export const FormTodoList = () => {
         {habilitado && escribir && (
           <p>Campo requerido</p>          
         )}
+      </div>
       </form>
+      <hr/>
     </Fragment>
   );
 };
