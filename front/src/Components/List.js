@@ -15,6 +15,7 @@ export const List = () => {
 
   // const [habilitado, setHabilitado] = useState(true);//state para habilitar el botón nueva lista
 
+  /**Metodo GET trae todas las tareitas de base de datos */
   useEffect(() => {
     fetch(HOST_API + "/todo")
       .then((response) => response.json())
@@ -23,6 +24,7 @@ export const List = () => {
       });
   }, [dispatch]);
 
+  /**Método DELETE borra la tareitas */
   const onDelete = (id) => {
     fetch(HOST_API + "/todo/" + id, {
       method: "DELETE",
@@ -35,6 +37,7 @@ export const List = () => {
     dispatch({ type: "edit-item", item: todo });
   };
 
+  /**Método PUT actualiza las tareitas */
   const onChange = (event, todo, groupId) => {
     // console.log(todo)
     // setHabilitado(todo.completed ? false : true);
@@ -58,6 +61,7 @@ export const List = () => {
       });
   };
 
+  /**Método GET trae el grupo de listas */
   useEffect(() => {
     fetch(HOST_API + "/todolist")
       .then((response) => response.json())
@@ -66,6 +70,7 @@ export const List = () => {
       });
   }, [dispatch]);
 
+  /**Método DELETE borra un grupo de lista */
   const onDeleteList = (id) => {
     // todo.list.map((item) => {
     //   if (item.id_tareas === id) {
@@ -81,6 +86,7 @@ export const List = () => {
     });
   };
 
+  /**Estilo que permite tachar la tarea cuando se marca completada */
   const decorationDone = {
     textDecoration: "line-through",
   };
