@@ -2,22 +2,26 @@ import  React ,{ useContext, useRef, useState } from "react";
 import {Store} from './Store'
 import { HOST_API } from "../App";
 
+/**Formulario que genera las tareitas */
 export const Form = ({ groupId }) => {
   const formRef = useRef(null);
+  // Context
   const {
     dispatch,
     state: { todo },
   } = useContext(Store);
   const item = todo.item;
-  const [state, setState] = useState(item);
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [hasWritten, setHasWritten] = useState(false);
+
+  const [state, setState] = useState(item);//state para un grupo de la lista
+  const [habilitado, setHabilitado] = useState(true);//state para habilitar el botón crear
+  const [escribir, setEscribir] = useState(false);//state que permite escribir en el input
 
   const onAdd = (event) => {
     event.preventDefault();
-    setIsDisabled(true);
-    setHasWritten(false);
+    setHabilitado(true);
+    setEscribir(false);
 
+    // request de tareitas que se enviara al back
     const request = {
       name: state.name,
       id: null,
@@ -25,6 +29,7 @@ export const Form = ({ groupId }) => {
       id_group: groupId,
     };
 
+    // ruta que conecta con el método POST del back para agregar las tareitas
     fetch(HOST_API + "/todo", {
       method: "POST",
       body: JSON.stringify(request),
@@ -42,7 +47,7 @@ export const Form = ({ groupId }) => {
 
   const onEdit = (event) => {
     event.preventDefault();
-
+    // request de tareitas editado que se enviara al back
     const request = {
       name: state.name,
       id: item.id,
@@ -50,6 +55,7 @@ export const Form = ({ groupId }) => {
       id_group: groupId,
     };
 
+     // ruta que conecta con el método PUT del back para actualizar las tareitas
     fetch(HOST_API + "/todo", {
       method: "PUT",
       body: JSON.stringify(request),
@@ -74,28 +80,29 @@ export const Form = ({ groupId }) => {
           placeholder="¿Qué deseas hacer?"
           defaultValue={item.id_group === groupId ? item.name : ""}
           onChange={(event) => {
-            setHasWritten(true);
-            setIsDisabled(event.target.value.length > null ? false : true);
+              // Validación para que el input no acepte espacios vacíos
+            setEscribir(true);
+            setHabilitado(event.target.value.trim().length > 0? false: true); 
             setState({ ...state, name: event.target.value });
           }}
         />
         {item.id && item.id_group === groupId && (
-          <button className="editar" onClick={onEdit}>
-            Actualizar
+          <button onClick={onEdit}>
+            Actualizar 
           </button>
         )}
         {!item.id && (
           <button
-            dissbled={isDisabled}
-            className="crear"
+            disabled={habilitado}
             onClick={onAdd}
           >
             Crear
           </button>
         )}
       </form>
-      {isDisabled && hasWritten && (
-        <span className="campo-obligatorio">Campo requerido</span>
+           {/* Mensaje de validación */}
+      {habilitado && escribir && (
+        <span>Campo requerido</span>
       )}
     </div>
   );

@@ -43,7 +43,7 @@ export function Reducer(state, action) {
       listUpDelete.list = listOfListUpdate;
       return { ...state, todoList: listUpDelete };
       
-    case "update-listOfList":
+    case "update-grupo":
       const listUpList = state.todoList;
       listUpList.list = action.list;
       return { ...state, todoList: listUpList };

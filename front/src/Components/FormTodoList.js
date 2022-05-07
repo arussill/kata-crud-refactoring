@@ -4,7 +4,6 @@ import {Store} from './Store'
 
 /**Formulario que genera el grupo de listas de todo */
 export const FormTodoList = () => {
-
   const formRef = useRef(null);
   // Context
   const {
