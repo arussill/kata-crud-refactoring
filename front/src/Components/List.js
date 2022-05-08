@@ -72,13 +72,6 @@ export const List = () => {
 
   /**Método DELETE borra un grupo de lista */
   const onDeleteList = (id) => {
-    // todo.list.map((item) => {
-    //   if (item.id_tareas === id) {
-    //     const itemId = item.id;
-    //     onDelete(itemId);
-    //   }
-    // });
-
     fetch(HOST_API + "/todolist/" + id, {
       method: "DELETE",
     }).then((list) => {
@@ -93,31 +86,33 @@ export const List = () => {
 
   return (
     <Fragment>
-      <table className="table table-light table-striped">
-        <tbody>
-          {currentList.map((list) => {
-            return (
-              <Fragment key={list.id}>
-                <thead>
-                  <tr>
-                  <th scope="col">{list.name}</th>
-                    <td>
-                      <button
-                        className="btn btn-danger btn-sm ms-5"
-                        onClick={() => onDeleteList(list.id)}
-                      >
-                        x
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Form groupId={list.id} />
-                    </td>
-                  </tr>
-                </thead>
+      <table className="table table-striped">
+        {currentList.map((list) => {
+          return (
+            <Fragment key={list.id}>
+              <thead >
                 <tr>
-                  <th scope="col">Id</th>
+                  <th id="tituloTabla" scope="col">
+                   <td > {list.name}</td>
+                    <td id="eliminarX">
+                    <button
+                      id="eliminarLista"
+                      className="btn btn-danger btn-sm ms-5"
+                      onClick={() => onDeleteList(list.id)}
+                    >
+                      x
+                    </button>
+                  </td>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <Form groupId={list.id} />
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
                   <th scope="col">Tarea</th>
                   <th scope="col">¿Completa?</th>
                   <th scope="col">Eliminar</th>
@@ -130,10 +125,10 @@ export const List = () => {
                         key={todo.id}
                         style={todo.completed ? decorationDone : {}}
                       >
-                         <th scope="col">{todo.id}</th>
-                        <td>{todo.name}</td>
+                        <td >{todo.name}</td>
                         <td>
                           <input
+                         
                             type="checkbox"
                             defaultChecked={todo.completed}
                             onChange={(event) => {
@@ -142,12 +137,16 @@ export const List = () => {
                           ></input>
                         </td>
                         <td>
-                          <button className="btn btn-danger" onClick={() => onDelete(todo.id)}>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => onDelete(todo.id)}
+                          >
                             Eliminar
                           </button>
                         </td>
                         <td>
-                          <button className="btn btn-warning"
+                          <button
+                            className="btn btn-warning"
                             // disabled={habilitado}
                             onClick={() => onEdit(todo)}
                           >
@@ -158,10 +157,11 @@ export const List = () => {
                     );
                   }
                 })}
-              </Fragment>  
-            );
-          })}
-        </tbody>
+              </tbody>
+              <br/>
+            </Fragment>
+          );
+        })}
       </table>
     </Fragment>
   );

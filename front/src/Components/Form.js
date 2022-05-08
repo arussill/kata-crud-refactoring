@@ -81,7 +81,7 @@ export const Form = ({ groupId }) => {
             type="text"
             name="name"
             className="form-control"
-            placeholder="¿Qué deseas hacer?"
+            placeholder="Agregar una tarea"
             defaultValue={item.id_group === groupId ? item.name : ""}
             onChange={(event) => {
               // Validación para que el input no acepte espacios vacíos
