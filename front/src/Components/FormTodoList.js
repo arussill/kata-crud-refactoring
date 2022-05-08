@@ -49,6 +49,7 @@ export const FormTodoList = () => {
       <form ref={formRef}>
       <div className="input-group mb-3">
         <input
+        required="required"
           type="text"
           name="name"
           className="form-control"
@@ -62,16 +63,22 @@ export const FormTodoList = () => {
           }}
         ></input>
         {!item.id && (
+          <div>
           <button className="btn btn-primary"
             disabled={habilitado}
             onClick={onAdd}
           >
             Nueva Lista
           </button>
+          <br/>  
+          </div> 
         )}
         {/* Mensaje de validación */}
         {habilitado && escribir && (
-          <p>Campo requerido</p>          
+          
+             
+          <p className="small">Campo requerido</p>       
+          
         )}
       </div>
       </form>

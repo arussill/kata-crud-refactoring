@@ -128,7 +128,6 @@ export const List = () => {
                         <td >{todo.name}</td>
                         <td>
                           <input
-                         
                             type="checkbox"
                             defaultChecked={todo.completed}
                             onChange={(event) => {

@@ -78,6 +78,7 @@ export const Form = ({ groupId }) => {
       <form ref={formRef}>
         <div className="input-group mb-3">
           <input
+          required="required"
             type="text"
             name="name"
             className="form-control"
@@ -92,7 +93,7 @@ export const Form = ({ groupId }) => {
               setState({ ...state, name: event.target.value });
             }}
           />
-          <div className="input-group-append"></div>
+           <div className="input-group-append"></div>
           {item.id && item.id_group === groupId && (
             <button className="btn btn-success" onClick={onEdit}>Actualizar</button>
           )}
@@ -107,7 +108,7 @@ export const Form = ({ groupId }) => {
         </div>
       </form>
       {/* Mensaje de validación */}
-      {habilitado && escribir && <span>Campo requerido</span>}
+      {habilitado && escribir && <span className="small">Campo requerido</span>}
     </div>
   );
 };
