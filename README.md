@@ -47,3 +47,6 @@ Realizar la siguiente representación donde se tiene TO-Do List agripado en list
 
 ![alt text]( ./todo-list-kata.gif "Demo funcional del ToDo List")
 
+
+## Video
+https://drive.google.com/file/d/15l5JYgL3vG1vPOE4OBmHemTSVWXDcfYj/view?usp=sharing
